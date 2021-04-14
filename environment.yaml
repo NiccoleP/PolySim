@@ -9,4 +9,5 @@ dependencies:
   - r-bedr
   - bedtools
   - bedops
+  - bioconductor-biomart
 prefix: /home/niccole/miniconda3/envs/polysim
