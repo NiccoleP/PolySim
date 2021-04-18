@@ -1,3 +1,24 @@
+library(tidyverse)
+library(bedr)
+library(biomaRt)
+library(tidyr)
+library(jsonlite)
+
+#load data
+height <- read_tsv("50_irnt.gwas.imputed_v3.both_sexes.tsv")
+blocks <- read_tsv("fourier_ls-chr3.bed",col_names=c("chr","start","end"))
+variants <- read_tsv("variants.tsv")
+#subset chr 3 
+height_chr3 <- filter(height, str_detect(variant, "^3:"))
+variants_chr3 <- filter(variants, str_detect(variant, "^3:"))
+
+# split the "variant" column into separate columns
+height_chr3 <- tidyr::separate(height_chr3, "variant", c("chr", "pos", "major", "minor"))
+height_chr3$pos<-as.numeric(height_chr3$pos)
+
+#subset only to those columns of interest
+variants_chr3<-variants_chr3 %>% dplyr::select(pos,ref,alt,rsid,varid)
+
 # make a new column that has the compact notation for the bed regions
 height_chr3 <- mutate(height_chr3, bed=paste0("chr", chr,":", pos-1, "-", pos))
 blocks <- mutate(blocks, bed=paste0(chr,":", start, "-", end))
@@ -20,7 +41,7 @@ independentB <- height_chr3 %>%
   group_by(ld_block) %>% 
   slice_min(pval, n = 1)
 
-#subset only those variants that have rsID
+# subset only those variants that have rsID
 independent_shortA<-inner_join(variants_chr3, independentA, by = c("pos"="pos"))
 independent_shortB<-inner_join(variants_chr3, independentB, by = c("pos"="pos"))
 
