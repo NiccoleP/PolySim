@@ -1,6 +1,5 @@
 library(tidyverse)
 library(bedr)
-library(biomaRt)
 library(tidyr)
 library(jsonlite)
 
