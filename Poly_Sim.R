@@ -4,10 +4,14 @@ library(biomaRt)
 library(tidyr)
 library(jsonlite)
 
+
+args = commandArgs(trailingOnly=TRUE)
+
 #load data
-height <- read_tsv("50_irnt.gwas.imputed_v3.both_sexes.tsv")
-blocks <- read_tsv("fourier_ls-chr3.bed",col_names=c("chr","start","end"))
-variants <- read_tsv("variants.tsv")
+height <- read_tsv(args[1])#"50_irnt.gwas.imputed_v3.both_sexes.tsv"
+blocks <- read_tsv(args[2],col_names=c("chr","start","end"))#"fourier_ls-chr3.bed"
+variants <- read_tsv(args[3])#"variants.tsv"
+
 #subset chr 3 
 height_chr3 <- filter(height, str_detect(variant, "^3:"))
 variants_chr3 <- filter(variants, str_detect(variant, "^3:"))
