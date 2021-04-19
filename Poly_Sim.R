@@ -72,5 +72,5 @@ for(i in 1:length(independentA$rsid)){
 
 
 summary_stats<-c(mean(na.rm = TRUE,height_chr3$beta),sd(height_chr3$beta,na.rm = TRUE))
-write_csv(x = summary_stats,file = "summary_stats")
-writeCsv(x=independentA,file="independent_variants")
+write_csv(x = as.data.frame(summary_stats),file = "summary_stats")
+write_csv(x=independentA,file="independent_variants")
