@@ -136,31 +136,30 @@ fitness(NULL,p3) {
 	p3.setSubpopulationSize(asInteger(p3_size));
 }
 73000:81802 late() {
-	if (sim.generation % 36 == 0) { // 
+	if (sim.generation % 36 == 0) { // change to %36 (every 36th gen)
 		cat("QTLs at generation P1" + sim.generation + ":\n\n");
 		cat("Mean phenotype african branch :\n");
 		meanPhenotypeP1 = mean(p1.individuals.tagF);
 		cat(format("%.2f", meanPhenotypeP1));
 		cat("\n\n-------------------------------\n");
-		qtls = sim.mutationsOfType(m2);
-		for (i in 0:(length(qtls.position)-1)){
-			for (j in 0:(length(pos)-1)){
-				if((pos[j]-50)<qtls.position[i] & qtls.position[i]<(pos[j]+50)){
-					cat("qtl in pos " + qtls.position[i] + "and beta" + qtls[i].selectionCoeff);
-					cat("beta in j "+ beta[j]);
-				}
-			}
-		}
-		
 		if(sim.generation > 76201){
-			cat("QTLs at generation P2" + sim.generation + ":\n\n");
+			cat("QTLs at generation P2 \t" + sim.generation + ":\n\n");
 			cat("Mean phenotype eur(asian) branch :\n");
 			meanPhenotypeP2 = mean(p2.individuals.tagF);
 			cat(format("%.2f", meanPhenotypeP2));
 			cat("\n\n-------------------------------\n");
+			qtls = sim.mutationsOfType(m2);
+			for (i in 0:(length(qtls.position)-1)){
+				for (j in 0:(length(pos)-1)){
+					if((pos[j]-50)<qtls.position[i] & qtls.position[i]<(pos[j]+50)){
+						cat("qtl in pos : " + qtls.position[i] + "and beta : " + qtls[i].selectionCoeff);
+						cat("beta in j : "+ beta[j]);
+					}
+				}
+			}
 		}
 		if(sim.generation > 80953){
-			cat("QTLs at generation P3" + sim.generation + ":\n\n");
+			cat("QTLs at generation P3 \t" + sim.generation + ":\n\n");
 			cat("Mean phenotype Asian branch :\n");
 			meanPhenotypeP3 = mean(p3.individuals.tagF);
 			cat(format("%.2f", meanPhenotypeP3));
@@ -171,8 +170,7 @@ fitness(NULL,p3) {
 // OUTPUT AND TERMINATE
 // Generation 81801 is the present
 81801 late() {
-	p2.outputVCFSample(2100,F,outputMultiallelics=T,filePath="./output_slim_vcf_p2");
-}
+	p2.outputVCFSample(100,F,outputMultiallelics=T,filePath="./output_slim_vcf_p2");}
 
 81802 { sim.simulationFinished(); }
 
