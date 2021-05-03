@@ -80,9 +80,9 @@ for(i in 1:length(independentA$rsid)){
 }
 
 
-summary_stats<-c(mean(na.rm = TRUE,height_chr3$beta),sd(height_chr3$beta,na.rm = TRUE))
-summary_stats<-data.frame(summary_stats[1],summary_stats[2]); colnames(summary_stats)<-c("mean","sd")
-write_delim(x =as.data.frame(summary_stats),file = "summary_stats",delim = '\t',col_names = FALSE)
+#summary_stats<-c(mean(na.rm = TRUE,height_chr3$beta),sd(height_chr3$beta,na.rm = TRUE))
+#summary_stats<-data.frame(summary_stats[1],summary_stats[2]); colnames(summary_stats)<-c("mean","sd")
+#write_delim(x =as.data.frame(summary_stats),file = "summary_stats",delim = '\t',col_names = FALSE)
 
 independent_varsA<-data.frame(independentA$pos,independentA$beta)
 write_delim(x=independent_varsA,file="independent_variantsA",delim = '\t',col_names = FALSE)
