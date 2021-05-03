@@ -28,6 +28,14 @@ rule independent_markers:
         "variants/variants.tsv.bgz"
     output:
         "ukbiobank/{code}_independent_variants"
-        "summary_stats"
     shell:
-        "Rscript Poly_Sim.R {input} "
+        "Rscript Poly_Sim.R {input}"
+        
+rule demographic model:
+    input:
+        "ukbiobank/{code}_independent_variants"
+    output:
+        "stdpopsim_slim_script_50scaled.slim"
+    shell:
+    "python3 -m stdpopsim  -e slim --slim-scaling-factor 50 --slim-script --slim-burn-in 7300 -v HomSap -s 1046 -c chr3 -o foo.ts -d OutOfAfrica_3G09 0 1198 0 \
+     > stdpopsim_slim_script_50scaled.slim"
