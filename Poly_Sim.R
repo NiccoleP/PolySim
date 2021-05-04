@@ -85,4 +85,4 @@ for(i in 1:length(independentA$rsid)){
 #write_delim(x =as.data.frame(summary_stats),file = "summary_stats",delim = '\t',col_names = FALSE)
 
 independent_varsA<-data.frame(independentA$pos,independentA$beta)
-write_delim(x=independent_varsA,file="independent_variantsA",delim = '\t',col_names = FALSE)
+write_delim(x=independent_varsA,file="50_irnt_independent_variants",delim = '\t',col_names = FALSE)
