@@ -33,9 +33,10 @@ rule independent_markers:
         
 rule demographic model:
     output:
-        "stdpopsim_slim_script_50scaled.slim"
+        "stdpopsim_slim_script_{scale}_scaled_{burn}_{chr}.slim",
+        "tree.ts"
     shell:
-        "python3 -m stdpopsim  -e slim --slim-scaling-factor 50 --slim-script --slim-burn-in 7300 -v HomSap -c chr3 -o foo.ts -d OutOfAfrica_3G09 0 1198 0 \
-        > stdpopsim_slim_script_50scaled.slim"
+        "python3 -m stdpopsim  -e slim --slim-scaling-factor {wildcards.scale} --slim-script --slim-burn-in {wildcards.burn} -v HomSap -c {wildcards.chr} -o {wildcards.tree}.ts -d OutOfAfrica_3G09 {wildcards.YRI} {wildcards.CEU} {wildcards.CHB} \
+        > stdpopsim_slim_script_{scale}_scaled_{burn}_{chr}.slim"
     ## input:
     ##    "ukbiobank/{code}_independent_variants"
