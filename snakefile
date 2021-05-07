@@ -12,7 +12,7 @@ rule ld_blocks:
     output:
         "ld_blocks/fourier_ls-{chr}.bed"
     shell:
-        "wget https://bitbucket.org/nygcresearch/ldetect-data/raw/ac125e47bf7ff3e90be31f278a7b6a61daaba0dc/EUR/fourier_ls-{chr}.bed"
+        "wget https://bitbucket.org/nygcresearch/ldetect-data/raw/ac125e47bf7ff3e90be31f278a7b6a61daaba0dc/EUR/fourier_ls-{wildcards.chr}.bed"
         "echo "$(tail -n +2 fourier_ls-{wildcards.chr}.bed)" > fourier_ls-{wildcards.chr}.bed"
 
 rule variants:
@@ -37,6 +37,4 @@ rule demographic model:
         "tree.ts"
     shell:
         "python3 -m stdpopsim  -e slim --slim-scaling-factor {wildcards.scale} --slim-script --slim-burn-in {wildcards.burn} -v HomSap -c {wildcards.chr} -o {wildcards.tree}.ts -d OutOfAfrica_3G09 {wildcards.YRI} {wildcards.CEU} {wildcards.CHB} \
-        > stdpopsim_slim_script_{scale}_scaled_{burn}_{chr}.slim"
-    ## input:
-    ##    "ukbiobank/{code}_independent_variants"
+        > stdpopsim_slim_script_{wildcards.scale}_scaled_{wildcards.burn}_{wildcards.chr}.slim"
