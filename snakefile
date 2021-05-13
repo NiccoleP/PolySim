@@ -31,6 +31,12 @@ rule independent_markers:
     shell:
         "Rscript Poly_Sim.R {input.trait} {input.blocks} {input.variants}"
         
+rule change_R_script:
+    output:
+        "Poly_Sim_chr{number}.R"
+    shell:
+       "sed 's/\^3/\^{wilcards.number}/g' Poly_Sim.R | sed 's/{wildcards.chr}/chr{wildcards.number}/g' > Poly_Sim_chr{wildcards.number}"
+
 rule demographic model:
     output:
         "stdpopsim_slim_script_{scale}_scaled_{burn}_{chr}.slim",
