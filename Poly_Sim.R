@@ -69,12 +69,21 @@ for( i in 1:length(independentA$rsid)){
   ancestral_alleleA[i]<-summary_data$mappings$ancestral_allele
 }
 
+independentA$ancestralAllele<-ancestral_alleleA
+
+
+#Ancestral allele must be present in the UKBB biallelic calls 
+independentA<-subset(independentA,independentA$ref == ancestral_alleleA | independentA$alt == ancestral_alleleA)
+before_polarizing<-data.frame(independentA$pos,independentA$major,independentA$minor,independentA$rsid,independentA$beta,independentA$ancestralAllele)
+colnames(before_polarizing)<-c("pos","major","minor","rsid","beta","ancestral")
+write_delim(x=before_polarizing,file="variants_before_polarizing",delim = '\t',col_names = FALSE)
+
 # polarize by ancestral allele 
 for(i in 1:length(independentA$rsid)){
-  if(is.na(ancestral_alleleA[i])){
-    ancestral_alleleA[i]<-independentA$major[i]
+  if(is.na(independentA$ancestralAllele[i])){
+    independentA$ancestralAllele[i]<-independentA$major[i]
   }
-  if(isTRUE(independentA$major[i] != ancestral_alleleA[i])){ # change sign 
+  if(isTRUE(independentA$major[i] != independentA$ancestralAllele[i])){ # change sign 
     independentA$beta[i]<-(-1)*independentA$beta[i]
   }
 }
@@ -83,6 +92,8 @@ for(i in 1:length(independentA$rsid)){
 #summary_stats<-c(mean(na.rm = TRUE,height_chr3$beta),sd(height_chr3$beta,na.rm = TRUE))
 #summary_stats<-data.frame(summary_stats[1],summary_stats[2]); colnames(summary_stats)<-c("mean","sd")
 #write_delim(x =as.data.frame(summary_stats),file = "summary_stats",delim = '\t',col_names = FALSE)
+bed_file<-data.frame(independentA$chr,independentA$pos-1,independentA$pos)
+write_delim(x=bed_file,file="Variants.bed",delim = '\t',col_names = FALSE)
 
 independent_varsA<-data.frame(independentA$pos,independentA$beta)
 write_delim(x=independent_varsA,file="50_irnt_independent_variants",delim = '\t',col_names = FALSE)
