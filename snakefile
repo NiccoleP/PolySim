@@ -12,7 +12,7 @@ rule ld_blocks:
     output:
         "ld_blocks/fourier_ls-{chr}.bed"
     shell:
-        "wget https://bitbucket.org/nygcresearch/ldetect-data/raw/ac125e47bf7ff3e90be31f278a7b6a61daaba0dc/EUR/fourier_ls-{chr}.bed"
+        "wget https://bitbucket.org/nygcresearch/ldetect-data/raw/ac125e47bf7ff3e90be31f278a7b6a61daaba0dc/EUR/fourier_ls-{wildcards.chr}.bed"
         "echo "$(tail -n +2 fourier_ls-{wildcards.chr}.bed)" > fourier_ls-{wildcards.chr}.bed"
 
 rule variants:
@@ -20,6 +20,7 @@ rule variants:
         "variants/variants.tsv.bgz"
         shell:
         "wget https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/round2/annotations/variants.tsv.bgz"
+
 rule change_R_script:
     output:
         "Poly_Sim_chr{number}.R"
@@ -29,10 +30,11 @@ rule change_R_script:
 rule independent_markers:
     input:
         "ukbiobank/{code}.gwas.imputed_v3.{sex}.tsv.bgz",
-        "ld_blocks/fourier_ls-chr3.bed"
+        "ld_blocks/fourier_ls-{chr}.bed",
         "variants/variants.tsv.bgz"
     output:
-        "ukbiobank/{code}_independent_variants"
+        "ukbiobank/{code}_independent_variants",
+        "variants_before_polarizing"
     shell:
         "Rscript Poly_Sim_chr{wildcards.number}.R {input} "
         
