@@ -38,6 +38,15 @@ rule independent_markers:
     shell:
         "Rscript Poly_Sim_chr{wildcards.number}.R {input} "
         
+rule phenotypes:
+    input:
+        "{pop}_indivs_and_variants.dataframe",
+        "{pop}_indivs_and_variants.dataframe",
+        "{pop}_indivs_and_variants.dataframe",
+        "variants_before_polarizing"
+    shell:
+        "Rscript phenotypes.R {input}"
+        
 rule make_bed: 
     output: 
         "{chr}_variants.bed"
