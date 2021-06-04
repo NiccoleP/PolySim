@@ -17,7 +17,7 @@ args <- parse_args(p)
 CHB<- read.table(args$pop_1)
 #CHB_indivs_and_variants.dataframe
 CHB<-CHB%>%filter(str_detect(V5, "^rs"))
-CEU<- rearead.table(args$pop_2)
+CEU<- read.table(args$pop_2)
 #CEU_indivs_and_variants.dataframe
 CEU<-CEU%>%filter(str_detect(V5, "^rs"))
 YRI<- read.table(args$pop_3)
@@ -25,7 +25,7 @@ YRI<- read.table(args$pop_3)
 YRI<-YRI%>%filter(str_detect(V5, "^rs"))
 var_nopol<-read.table(args$var_nopol)
 #variants_before_polarizing
-colnames(var_nopol)<-c("pos","major","minor","rsid","beta","ancestral")
+colnames(var_nopol)<-c("pos","ref","alt","rsid","beta","ancestral")
 all_pops<-list(CHB,CEU,YRI)
 
 for( i in 1:length(all_pops)){
