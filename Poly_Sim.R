@@ -74,8 +74,8 @@ independentA$ancestralAllele<-ancestral_alleleA
 
 #Ancestral allele must be present in the UKBB biallelic calls 
 independentA<-subset(independentA,independentA$ref == ancestral_alleleA | independentA$alt == ancestral_alleleA)
-before_polarizing<-data.frame(independentA$pos,independentA$major,independentA$minor,independentA$rsid,independentA$beta,independentA$ancestralAllele)
-colnames(before_polarizing)<-c("pos","major","minor","rsid","beta","ancestral")
+before_polarizing<-data.frame(independentA$pos,independentA$ref,independentA$alt,independentA$rsid,independentA$beta,independentA$ancestralAllele)
+colnames(before_polarizing)<-c("pos","ref","alt","rsid","beta","ancestral")
 write_delim(x=before_polarizing,file="variants_before_polarizing",delim = '\t',col_names = FALSE)
 
 # polarize by ancestral allele 
