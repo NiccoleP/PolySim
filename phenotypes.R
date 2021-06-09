@@ -14,19 +14,19 @@ args <- parse_args(p)
 
 # load data
 
-CHB<- read.table(args$pop_1)
-#CHB_indivs_and_variants.dataframe
-CHB<-CHB%>%filter(str_detect(V5, "^rs"))
-CEU<- read.table(args$pop_2)
-#CEU_indivs_and_variants.dataframe
-CEU<-CEU%>%filter(str_detect(V5, "^rs"))
-YRI<- read.table(args$pop_3)
-#YRI_indivs_and_variants.dataframe
-YRI<-YRI%>%filter(str_detect(V5, "^rs"))
+pop_1<- read.table(args$pop_1)
+#pop_1_indivs_and_variants.dataframe
+pop_1<-pop_1%>%filter(str_detect(V5, "^rs"))
+pop_2<- read.table(args$pop_2)
+#pop_2_indivs_and_variants.dataframe
+pop_2<-pop_2%>%filter(str_detect(V5, "^rs"))
+pop_3<- read.table(args$pop_3)
+#pop_3_indivs_and_variants.dataframe
+pop_3<-pop_3%>%filter(str_detect(V5, "^rs"))
 var_nopol<-read.table(args$var_nopol)
 #variants_before_polarizing
 colnames(var_nopol)<-c("pos","ref","alt","rsid","beta","ancestral")
-all_pops<-list(CHB,CEU,YRI)
+all_pops<-list(pop_1,pop_2,pop_3)
 
 for( i in 1:length(all_pops)){
   all_pops[[i]]$beta<-var_nopol$beta
@@ -113,6 +113,7 @@ for(i in 1:length(tmps)){
   tmps[[i]]<-tmps[[i]]*all_pops[[i]]$beta
 }
 
-mean(colSums(tmps[[1]]))
-mean(colSums(tmps[[2]]))
-mean(colSums(tmps[[3]]))
+summary_stats<-c(c("pop_1",mean(colSums(tmps[[1]])),sd(colSums(tmps[[1]]))),
+c("pop_2",mean(colSums(tmps[[2]])),sd(colSums(tmps[[2]]))),
+c("pop_3",mean(colSums(tmps[[3]])),sd(colSums(tmps[[3]]))))
+write_delim(x =as.data.frame(summary_stats),file = "summary_stats_pheno",delim = '\t',col_names = FALSE)
