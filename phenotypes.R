@@ -116,4 +116,4 @@ for(i in 1:length(tmps)){
 summary_stats<-c(c("pop_1",mean(colSums(tmps[[1]])),sd(colSums(tmps[[1]]))),
 c("pop_2",mean(colSums(tmps[[2]])),sd(colSums(tmps[[2]]))),
 c("pop_3",mean(colSums(tmps[[3]])),sd(colSums(tmps[[3]]))))
-write_delim(x =as.data.frame(summary_stats),file = "summary_stats_pheno",delim = '\t',col_names = FALSE)
+write_delim(x =as.data.frame(summary_stats),file = "summary_stats_pheno.txt",delim = '\t',col_names = FALSE)
