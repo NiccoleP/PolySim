@@ -44,6 +44,8 @@ rule phenotypes:
         "{pop}_indivs_and_variants.dataframe",
         "{pop}_indivs_and_variants.dataframe",
         "variants_before_polarizing"
+    output:
+        "summary_stats_pheno.txt"
     shell:
         "Rscript phenotypes.R {input}"
         
